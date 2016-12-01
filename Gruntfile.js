@@ -82,10 +82,9 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'mochaTest'
   ]);
-
+  
   grunt.registerTask('build', [
   ]);
-
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
