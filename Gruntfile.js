@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       options: {
-        separator: ' ',
+        separator: '',
       },
       dist: {
         src: ['public/client/*.js'],
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
 
   grunt.registerTask('server-dev', function (target) {
-    grunt.task.run([ 'nodemon', 'watch' ]);
+    grunt.task.run([ 'nodemon']);
   });
 
   ////////////////////////////////////////////////////
