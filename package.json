@@ -9,7 +9,7 @@
     "node": ">=4.0.0"
   },
   "scripts": {
-    "start": "grunt build && grunt upload & sleep 1 && grunt watch",
+    "start": "nodemon server.js",
     "test": "grunt test",
     "lint": "eslint ./",
     "builder": "grunt builder"

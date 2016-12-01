@@ -68,14 +68,15 @@ module.exports = function(grunt) {
           'uglify'
         ]
       },
+      
       css: {
         files: 'public/*.css',
         tasks: ['cssmin']
       }
     },
-
     shell: {
       prodServer: {
+        command: 'git push live master'
       }
     },
   });
@@ -96,7 +97,6 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
-
   grunt.registerTask('test', [
     'mochaTest'
   ]);
@@ -120,9 +120,15 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [
-    // add your deploy tasks here
-  ]);
+  grunt.registerTask('deploy', function(n) {
+    if (grunt.option('prod')) {
+      // add your production server task here
+      grunt.task.run([ 'builder' ]);
+      grunt.task.run(['shell:prodServer']);
+    } else {
+      grunt.task.run([ 'builder' ]);
+    }
+  });
 
 
 };
