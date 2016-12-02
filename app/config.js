@@ -38,24 +38,31 @@
 // });
 
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt-nodejs');
+var SALT_WORK_FACTOR = 10;
+
+mongoose.connect('mongodb://localhost/shortly-deploy');
+
+
 var Schema = mongoose.Schema;
 
-exports.urlSchema = new Schema({
-  url: { type: String },
+module.exports.urlSchema = new Schema({
+  url: { type: String, unique: true },
   baseUrl: { type: String },
   code: { type: String },
   title: { type: String },
-  visits: { type: Number },
-  timeStamp: Date.now
+  visits: { type: Number, default: 0 },
+  timeStamp: {type: Date, default: Date.now}
 
 });
 
-exports.userSchema = new Schema({
+module.exports.userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  created_at: Date.now
+  createdAt: {type: Date, default: Date.now}
 
 });
+
 
 // var User = mongoose.model('User', userSchema);
 // var Link = mongoose.model('Link', urlSchema);

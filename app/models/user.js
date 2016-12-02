@@ -3,12 +3,10 @@ var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
 
-var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 
-var User = mongoose.model('User', db.userSchema);
 
-UserSchema.pre('save', function(next) {
+db.userSchema.pre('save', function(next) {
   var user = this;
 
     // only hash the password if it has been modified (or is new)
@@ -21,7 +19,7 @@ UserSchema.pre('save', function(next) {
       return next(err);
     }
         // hash the password using our new salt
-    bcrypt.hash(user.password, salt, function(err, hash) {
+    bcrypt.hash(user.password, salt, null, function(err, hash) {
       if (err) {
         return next(err);
       }
@@ -32,7 +30,7 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+db.userSchema.methods.comparePassword = function(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
     if (err) {
       return cb(err);
@@ -41,6 +39,7 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
 
+var User = mongoose.model('User', db.userSchema);
 
 // var User = db.Model.extend({
 //   tableName: 'users',
@@ -61,5 +60,11 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 //       });
 //   }
 // });
+// var christy = new User({
+//   username: 'christy2',
+//   password: 'smash'
+// });
+
+// christy.save();
 
 module.exports = User;
